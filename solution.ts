@@ -14,6 +14,9 @@ function formatValue(value: string | number | boolean): string | number | boolea
   throw new Error("Invalid type");
 }
 
+
+
+
 function getLength(value: string | any[]): number {
   if (typeof value === "string") {
     return value.length;
@@ -25,6 +28,7 @@ function getLength(value: string | any[]): number {
 
   throw new Error("Invalid type");
 }
+
 
 
 
@@ -45,8 +49,6 @@ class Person {
 
 
 
-
-
 type Item = {
   title: string;
   rating: number;
@@ -57,3 +59,15 @@ function filterByRating(items: Item[]): Item[] {
 }
 
 
+
+
+type User = {
+  id: number;
+  name: string;
+  email: string;
+  isActive: boolean;
+};
+
+function filterActiveUsers(users: User[]): User[] {
+  return users.filter(user => user.isActive === true);
+}
