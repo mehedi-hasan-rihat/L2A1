@@ -14,6 +14,16 @@ function formatValue(value: string | number | boolean): string | number | boolea
   throw new Error("Invalid type");
 }
 
-console.log(formatValue("hello"));
-console.log(formatValue(5));
-console.log(formatValue(false));
+function getLength(value: string | any[]): number {
+  if (typeof value === "string") {
+    return value.length;
+  }
+
+  if (Array.isArray(value)) {
+    return value.length;
+  }
+
+  throw new Error("Invalid type");
+}
+
+
