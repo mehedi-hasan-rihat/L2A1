@@ -1,36 +1,22 @@
 function formatValue(value: string | number | boolean): string | number | boolean {
-  if (typeof value === "string") {
+  if (typeof value === 'string') {
     return value.toUpperCase();
   }
-
-  if (typeof value === "number") {
+  if (typeof value === 'number') {
     return value * 10;
   }
-
-  if (typeof value === "boolean") {
-    return !value;
-  }
-
-  throw new Error("Invalid type");
+  return !value;
 }
 
-
-
-
 function getLength(value: string | any[]): number {
-  if (typeof value === "string") {
+  if (typeof value === 'string') {
     return value.length;
   }
-
   if (Array.isArray(value)) {
     return value.length;
   }
-
-  throw new Error("Invalid type");
+  return 0;
 }
-
-
-
 
 class Person {
   name: string;
@@ -42,49 +28,97 @@ class Person {
   }
 
   getDetails(): string {
-    return `Name: ${this.name}, Age: ${this.age}`;
+    return `'Name: ${this.name}, Age: ${this.age}'`;
   }
 }
 
-
-
-
-type Item = {
+interface RatingItem {
   title: string;
   rating: number;
-};
-
-function filterByRating(items: Item[]): Item[] {
-  return items.filter(item => item.rating >= 4);
 }
 
+function filterByRating(items: RatingItem[]): RatingItem[] {
+  return items.filter((item) => item.rating >= 4);
+}
 
-
-
-type User = {
+interface User {
   id: number;
   name: string;
   email: string;
   isActive: boolean;
-};
-
-function filterActiveUsers(users: User[]): User[] {
-  return users.filter(user => user.isActive === true);
 }
 
+function filterActiveUsers(users: User[]): User[] {
+  return users.filter((user) => user.isActive === true);
+}
 
+interface Book {
+  title: string;
+  author: string;
+  publishedYear: number;
+  isAvailable: boolean;
+}
 
-type Product = {
+function printBookDetails(book: Book): void {
+  const availability = book.isAvailable ? 'Yes' : 'No';
+  console.log(
+    `Title: ${book.title}, Author: ${book.author}, Published: ${book.publishedYear}, Available: ${availability}`
+  );
+}
+
+function getUniqueValues(arr1: (string | number)[], arr2: (string | number)[]): (string | number)[] {
+  const result: (string | number)[] = [];
+
+  for (const val of arr1) {
+    if (result.indexOf(val) === -1) {
+      result.push(val);
+    }
+  }
+
+  for (const val of arr2) {
+    if (result.indexOf(val) === -1) {
+      result.push(val);
+    }
+  }
+
+  return result;
+}
+
+interface Product {
   name: string;
   price: number;
   quantity: number;
   discount?: number;
-};
+}
 
 function calculateTotalPrice(products: Product[]): number {
-  return products.reduce((total, product) => {
-    const subtotal = product.price * product.quantity;
-    const discountAmount = product.discount ? subtotal * (product.discount / 100) : 0;
-    return total + (subtotal - discountAmount);
-  }, 0);
+  if (products.length === 0) return 0;
+
+  return products
+    .map((p) => {
+      const baseTotal = p.price * p.quantity;
+
+      if (typeof p.discount === 'number') {
+        const discountAmount = baseTotal * (p.discount / 100);
+        return baseTotal - discountAmount;
+      }
+
+      return baseTotal;
+    })
+    .reduce((sum, curr) => sum + curr, 0);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
